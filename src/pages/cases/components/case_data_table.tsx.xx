@@ -1,0 +1,187 @@
+import React, { useState } from 'react'
+import UpdateCaseModal from './update_case_modal';
+import NewIncomeModal from '../../treasury/components/new_income_modal';
+import NewOutcomeModal from '../../treasury/components/new_outcome_modal';
+import { HiArrowDown, HiArrowUp, HiDocumentReport, HiPencil } from 'react-icons/hi';
+import { CaseRequest, CaseState } from '../redux/types/case_types';
+import { CategoryRequest } from '../../../core/redux/types/category_types';
+import { TagRequest } from '../../../core/redux/types/tag_types';
+import { TargetRequest } from '../../../core/redux/types/target_types';
+import { SubjectRequest } from '../../../core/redux/types/subject_types';
+import { StatusRequest } from '../../../core/redux/types/status_types';
+import { IncomeTypeRequest } from '../../treasury/redux/types/income_type_types';
+import { OutcomeTypeRequest } from '../../treasury/redux/types/outcome_type_types';
+import { CustomButton } from '../../../core/components/buttons/custom_button';
+import { useNavigate } from 'react-router-dom';
+import { TreasuryRequest } from '../../treasury/redux/types/treasury_types';
+import { putCase } from '../redux/actions/case_action';
+import { UserAccountOfficeGroupRequest } from '../../auth/redux/types/user_account_office_group_types';
+import { SecondStatusRequest } from '../../../core/redux/types/second_status_types';
+import { InstitutionRequest } from '../../../core/redux/types/institution_types';
+import { ContactRequest } from '../../directory/redux/types/contact_types';
+
+type Props = {
+  data: CaseRequest[],
+  tags: TagRequest[],
+  categories: CategoryRequest[],
+  targets: TargetRequest[],
+  subjects: SubjectRequest[],
+  status: StatusRequest[],
+  second_status: SecondStatusRequest[],
+  institutions: InstitutionRequest[],
+  income_types: IncomeTypeRequest[],
+  outcome_types: OutcomeTypeRequest[],
+  selectedRow: number,
+  new_one: CaseRequest | null,
+  user_account_office_groups: UserAccountOfficeGroupRequest[],
+  contacts: ContactRequest[],
+  putCase: (data: CaseState) => void,
+}
+
+export const CaseDataTable = (props: Props) => {
+
+  const navigate = useNavigate();
+
+  const handleNavigation = (treasury: TreasuryRequest) => {
+    navigate(`/fees?case_id=${treasury.case.id}&action=search-case`);
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const handleOptionClick = (row: CaseRequest) => {
+    setIsOpen(false)
+  };
+
+  const handleUpdate = (data: CaseState) => {
+    setIsOpen(false)
+    console.log('update contact response: ', data)
+    var index = props.data.findIndex(x => x.id == data.new_one!.id)
+    // setCases(prevState => {
+    //   const updatedCases = [...prevState!];
+    //   updatedCases[index] = data.new_one!;
+    //   return updatedCases;
+    // });
+  };
+
+  return (
+    <>
+      {props.data ? (
+        <div className='pt-5'>
+
+          <div className="overflow-x-scroll">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                  <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Codigo</th>
+                  <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                  <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resumen</th>
+                  <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado Primario</th>
+                  <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado Secundario</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {props.data?.map((_case) => (
+                <tr
+                  key={_case.id}
+                  onClick={() => handleOptionClick(_case)}
+                > 
+                  <td className="gap-2 px-0 py-0 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <div className='p-1 w-1/3'>
+                      <UpdateCaseModal 
+                        tags={props.tags}
+                        handleFormSubmit={handleUpdate}
+                        categories={props.categories}
+                        targets={props.targets}
+                        subjects={props.subjects}
+                        status={props.status}
+                        case={_case} colors={['indigo', 'indigo']}
+                        icon={<HiPencil />} 
+                        label={''} 
+                        putCase={putCase} 
+                        second_status={props.second_status} 
+                        institutions={props.institutions} 
+                        contacts={props.contacts} 
+                        user_account_office_groups={[]} 
+                        folders={[]}
+                      />
+                    </div>
+                    <div className='p-1 w-1/3'>
+                      <NewIncomeModal
+                        case={_case}
+                        tags={props.tags}
+                        cases={props.data}
+                        handleFormSubmit={(data) => { console.log('income submited: ', data); } }
+                        colors={['indigo', 'indigo']} icon={<HiArrowUp />} label={''}
+                        income_types={props.income_types}
+                      />
+                    </div>
+                    <div className='p-1 w-1/3'>
+                      <NewOutcomeModal
+                        case={_case}
+                        tags={props.tags}
+                        cases={props.data}
+                        handleFormSubmit={(data) => { console.log('outcome submited: ', data); } }
+                        colors={['indigo', 'indigo']} icon={<HiArrowDown />} label={''}
+                        outcome_types={props.outcome_types}
+                      />
+                    </div>
+                  </td>
+                  <td className="px-0 py-0 whitespace-nowrap text-sm font-medium text-gray-900">{_case.code}</td>
+                  <td className="px-0 py-0 whitespace-nowrap text-sm font-medium text-gray-900">{_case.name}</td>
+                  <td className="px-0 py-0 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <div className='w-full flex flex-wrap'>
+                      <div className='p-1'>
+                        <CustomButton 
+                          colors={['indigo', 'indigo']}
+                          icon={<HiDocumentReport />}
+                          label={'$'} 
+                          onClick={() => {handleNavigation({
+                            id: 0,
+                            search: '',
+                            case: {
+                              id: _case.id,
+                              new_one: null
+                            }
+                          })}}                    
+                        />
+                      </div>
+                      <div className='p-1'>
+                        <CustomButton 
+                          colors={['indigo', 'indigo']}
+                          icon={<HiDocumentReport />}
+                          label={'$$'} 
+                          onClick={() => {handleNavigation({
+                            id: 0,
+                            search: '',
+                            case: {
+                              id: _case.id,
+                              new_one: null
+                            }
+                          })}}                    
+                        />
+                      </div>
+                    </div>
+                    <div className='w-60'>
+                      <p className='break-words whitespace-break-spaces'>
+                      Este caso fue creado por {_case.created_by!.first_name} {_case.created_by!.last_name}
+                      el dia {_case.created_at} se menciona lo siguiente : {_case.description}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="px-0 py-0 whitespace-nowrap text-sm font-medium text-gray-900">{_case.status!.name}</td>
+                  <td className="px-0 py-0 whitespace-nowrap text-sm font-medium text-gray-900">{_case.subject!.name}</td>
+                  
+                </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      ) : (
+        <p>No tienes caseos aun</p>
+      )}
+    </>
+  )
+}

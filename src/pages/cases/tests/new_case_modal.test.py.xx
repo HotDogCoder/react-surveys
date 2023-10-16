@@ -1,0 +1,107 @@
+
+import random
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+
+mock_categories = ['POLICIAL','ALIMENTOS']
+mock_status = ['CREADO']
+mock_second_status = ['EN ANALISIS INTERNO']
+mock_subjects = ['SE REQUIERE UNA JUNTA DE GRUPO']
+mock_institutions = ['SUNAT']
+mock_tags = ['violencia','drogas']
+mock_targets = ['DEMANDANTE']
+
+def test_case_modal():
+    screenshot_driver = 'Chrome'
+    driver = None
+    # url = screenshot.url
+    if screenshot_driver == 'Chrome':
+        chrome_options = Options()
+        chrome_options.add_experimental_option("debuggerAddress", "localhost:6660")
+        chrome_service = Service('/Users/Shared/chromedriver/chromedriver')
+        driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+    elif screenshot_driver == 'Firefox':
+        driver = webdriver.Firefox(
+            executable_path="/usr/bin/geckodriver"
+        )
+    elif screenshot_driver == 'Safari':
+        driver = webdriver.Safari()
+    elif screenshot_driver == 'Edge':
+        driver = webdriver.Edge()
+
+    driver.get('http://localhost:3000/cases')
+
+    time.sleep(8)
+
+    driver.execute_script(f"var cancel = document.querySelector('button[data-anchor=\"cancel-modal\"]'); if(cancel) cancel.click()")
+
+    new_case_button = driver.find_element(By.ID,"new-case-button")
+
+    new_case_button.click()
+
+    input_code = driver.find_element(By.NAME,"code")
+    code = input_code.get_attribute("value")
+    for i in range(len(code)):
+        input_code.send_keys(Keys.BACKSPACE)
+    input_code.click() 
+    input_code.clear()
+    input_code.send_keys(f"CODIGO DE PRUEBA {random.randint(1,1000)}")
+    input_name = driver.find_element(By.NAME,"name")
+    name = input_name.get_attribute("value")
+    for i in range(len(name)):
+        time.sleep(0.5)
+        input_name.send_keys(Keys.BACKSPACE)
+    input_name.click()
+    input_name.clear()
+    input_name.send_keys(f"NOMBRE DE PRUEBA {random.randint(1,1000)}")
+    input_description = driver.find_element(By.ID,"description")
+    description = input_description.text
+    for i in range(len(description)):
+        time.sleep(0.5)
+        input_description.send_keys(Keys.BACKSPACE)
+    input_description.click()
+    input_description.clear()
+    input_description.send_keys(f"DESCRIPCION DE PRUEBA {random.randint(1,1000)}")
+
+    buttons = driver.find_elements(By.CSS_SELECTOR,'div[role="button"]')
+    for button in buttons:
+        button.click()
+
+    # wait until input[role="combobox"] are loaded
+    autocompletes = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'input[role="combobox"]')))
+    # autocompletes = driver.find_elements(By.CSS_SELECTOR,'input[role="combobox"]')
+    for index, autocomplete in enumerate(autocompletes):
+        time.sleep(1)
+        autocomplete.click()
+        if autocomplete.get_attribute("aria-expanded") == "true":
+            if index == 0:
+                arr = mock_categories
+            elif index == 1:
+                arr = mock_status
+            elif index == 2:
+                arr = mock_second_status
+            elif index == 3:
+                arr =  mock_subjects
+            elif index == 4:
+                arr = mock_institutions
+            elif index == 5:
+                arr = mock_targets
+            elif index == 6:
+                arr = mock_tags
+
+            for data in arr:
+                if autocomplete and index < 7:
+                    autocomplete.clear()
+                    autocomplete.send_keys(data)
+                    autocomplete.send_keys(Keys.ENTER)         
+            
+    # driver.execute_script(f"var confirm = document.querySelector('button[data-anchor=\"confirm-modal\"]'); if(confirm) confirm.click()")
+
+test_case_modal()

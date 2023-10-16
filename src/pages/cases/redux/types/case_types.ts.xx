@@ -1,0 +1,239 @@
+import { CategoryRequest, CategoryState } from "../../../../core/redux/types/category_types";
+import { GroupRequest } from "../../../../core/redux/types/group_types";
+import { Institution, InstitutionRequest } from "../../../../core/redux/types/institution_types";
+import { SecondStatus, SecondStatusRequest } from "../../../../core/redux/types/second_status_types";
+import { StatusRequest, StatusState } from "../../../../core/redux/types/status_types";
+import { SubjectRequest, SubjectState } from "../../../../core/redux/types/subject_types";
+import { TagRequest, TagState } from "../../../../core/redux/types/tag_types";
+import { TargetRequest, TargetState } from "../../../../core/redux/types/target_types";
+import { UserAccountOfficeGroupRequest } from "../../../auth/redux/types/user_account_office_group_types";
+import { UserAccountRequest } from "../../../auth/redux/types/user_account_types";
+import { ContactRequest } from "../../../directory/redux/types/contact_types";
+import { FolderRequest } from "../../../documents/redux/types/folder_types";
+
+export interface Case {
+    id: number;
+    code?: string;
+    name?: string;
+    description?: string;
+    created_by?: UserAccountRequest | null;
+    created_at?: string;
+    updated_at?: string;
+    contacts?: ContactRequest[];
+    tags?: TagRequest[];
+    categories?: CategoryRequest[];
+    status?: StatusRequest | null;
+    subject?: SubjectRequest | null;
+    target?: TargetRequest | null;
+}
+
+export interface CaseRequest {
+    id: number;
+    code?: string;
+    name?: string;
+    description?: string;
+    created_by?: UserAccountRequest | null;
+    created_at?: string;
+    updated_at?: string;
+    contacts?: ContactRequest[];
+    tags?: TagRequest[];
+    categories?: CategoryRequest[];
+    status?: StatusRequest | null;
+    subject?: SubjectRequest | null;
+    target?: TargetRequest | null;
+    second_status?: SecondStatusRequest | null;
+    institution?: InstitutionRequest| null;
+    folders?: FolderRequest[];
+    user_account_office_groups?: UserAccountOfficeGroupRequest[];
+    error?: any;
+    message?: string;
+    new_one: CaseRequest | null;
+}
+
+export interface CaseResponse {
+    id: number;
+    code?: string;
+    name?: string;
+    description?: string;
+    created_by?: UserAccountRequest | null;
+    created_at?: string;
+    updated_at?: string;
+    contacts?: ContactRequest[];
+    tags?: TagRequest[];
+    categories?: CategoryRequest[];
+    status?: StatusRequest | null;
+    subject?: SubjectRequest | null;
+    target?: TargetRequest | null;
+
+    second_status?: SecondStatusRequest;
+    institution?: InstitutionRequest;
+    user_account_office_groups?: UserAccountOfficeGroupRequest[];
+    folders?: FolderRequest[],
+
+    cases: CaseRequest[];
+    error?: any;
+    message?: string;
+
+    category_state?: CategoryState;
+    tag_state?: TagState;
+    target_state?: TargetState;
+    subject_state?: SubjectState;
+    status_state?: StatusState;
+    new_one: CaseRequest | null;
+    loading?: boolean;
+}
+
+export type CaseState = CaseResponse;
+
+export const START_LOADING = 'START_LOADING';
+export const END_LOADING = 'END_LOADING';
+export const POST_CASE = 'POST_CASE';
+export const POST_SUCCESS_CASE = 'POST_SUCCESS_CASE';
+export const POST_FAIL_CASE = 'POST_FAIL_CASE';
+export const PUT_CASE = 'PUT_CASE';
+export const PUT_SUCCESS_CASE = 'PUT_SUCCESS_CASE';
+export const PUT_FAIL_CASE = 'PUT_FAIL_CASE';
+export const UPDATE_CASE = 'UPDATE_CASE';
+export const UPDATE_SUCCESS_CASE = 'UPDATE_SUCCESS_CASE';
+export const UPDATE_FAIL_CASE = 'UPDATE_FAIL_CASE';
+export const DELETE_CASE = 'DELETE_CASE';
+export const DELETE_FAIL_CASE = 'DELETE_SUCCESS_CASE';
+export const DELETE_SUCCESS_CASE = 'DELETE_FAIL_CASE';
+export const GET_CASE = 'GET_CASE';
+export const GET_SUCCESS_CASE = 'GET_SUCCESS_CASE';
+export const GET_FAIL_CASE = 'GET_FAIL_CASE';
+
+export const SELECT_CASE = 'SELECT_CASE'
+export const SELECT_SUCCESS_CASE = 'SELECT_SUCCESS_CASE'
+export const SELECT_FAIL_CASE = 'SELECT_FAIL_CASE'
+// [ANCHOR_1]
+        
+
+interface PostCaseAction {
+type: typeof POST_CASE;
+payload: CaseRequest;
+}
+
+interface PostSuccessCaseAction {
+type: typeof POST_SUCCESS_CASE;
+payload: CaseState;
+}
+
+interface PostFailCaseAction {
+type: typeof POST_FAIL_CASE;
+payload: CaseRequest;
+}
+
+interface PutCaseAction {
+type: typeof PUT_CASE;
+payload: CaseState;
+}
+
+interface PutSuccessCaseAction {
+type: typeof PUT_SUCCESS_CASE;
+payload: CaseState;
+}
+
+interface PutFailCaseAction {
+type: typeof PUT_FAIL_CASE;
+payload: CaseState;
+}
+
+interface UpdateCaseAction {
+type: typeof UPDATE_CASE;
+payload: CaseState;
+}
+
+interface UpdateSuccessCaseAction {
+type: typeof UPDATE_SUCCESS_CASE;
+payload: CaseState;
+}
+
+interface UpdateFailCaseAction {
+type: typeof UPDATE_FAIL_CASE;
+payload: CaseState;
+}
+
+interface DeleteCaseAction {
+type: typeof DELETE_CASE;
+payload: CaseState;
+}
+
+interface DeleteSuccessCaseAction {
+type: typeof DELETE_SUCCESS_CASE;
+payload: CaseState;
+}
+
+interface DeleteFailCaseAction {
+type: typeof DELETE_FAIL_CASE;
+payload: CaseState;
+}
+
+interface GetCaseAction {
+type: typeof GET_CASE;
+payload: CaseState;
+}
+
+interface GetSuccessCaseAction {
+type: typeof GET_SUCCESS_CASE;
+payload: CaseState;
+}
+
+interface GetFailCaseAction {
+type: typeof GET_FAIL_CASE;
+payload: CaseState;
+}
+
+
+interface SelectCaseAction {
+    type: typeof SELECT_CASE;
+    payload: CaseState;
+}
+
+interface SelectSuccessCaseAction {
+type: typeof SELECT_SUCCESS_CASE;
+payload: CaseState;
+}
+
+interface SelectFailCaseAction {
+type: typeof SELECT_FAIL_CASE;
+payload: CaseState;
+}
+// [ANCHOR_2]
+
+interface StartLoadingAction {
+type: typeof START_LOADING;
+payload: CaseRequest;
+}
+
+interface EndLoadingAction {
+type: typeof END_LOADING;
+payload: CaseRequest;
+}
+        
+
+export type CaseActionTypes = 
+StartLoadingAction
+| EndLoadingAction
+| PostCaseAction 
+| PostSuccessCaseAction 
+| PostFailCaseAction 
+| PutCaseAction 
+| PutSuccessCaseAction 
+| PutFailCaseAction 
+| UpdateCaseAction 
+| UpdateSuccessCaseAction 
+| UpdateFailCaseAction 
+| DeleteCaseAction 
+| DeleteSuccessCaseAction 
+| DeleteFailCaseAction 
+| GetCaseAction 
+| GetSuccessCaseAction 
+| GetFailCaseAction 
+
+| SelectCaseAction 
+| SelectSuccessCaseAction 
+| SelectFailCaseAction 
+// [ANCHOR_3]
+        
+    

@@ -1,0 +1,218 @@
+import axios from "axios";
+import FullWidthLayout from "../../layouts/full_width_layout";
+import { useEffect, useState } from "react";
+import NewCaseModal from "./components/new_case_modal";
+import { CaseDataTable } from "./components/case_data_table";
+import { HiPlusCircle } from "react-icons/hi";
+import { connect, ConnectedProps } from 'react-redux';
+import { CaseState } from "./redux/types/case_types";
+import { getTarget } from "../../core/redux/actions/target_action";
+import { getStatus } from "../../core/redux/actions/status_action";
+import { getSubject } from "../../core/redux/actions/subject_action";
+import { getTag } from "../../core/redux/actions/tag_action";
+import { getCategory } from "../../core/redux/actions/category_action";
+import { RootState } from "../../store";
+import { ContactRequest } from "../directory/redux/types/contact_types";
+import { putCase, postCase, getCase } from "./redux/actions/case_action";
+import { getIncomeType } from "../treasury/redux/actions/income_type_action";
+import { getOutcomeType } from "../treasury/redux/actions/outcome_type_action";
+import { getContact } from "../directory/redux/actions/contact_action";
+import { getSecondStatus } from "../../core/redux/actions/second_status_action";
+import { getInstitution } from "../../core/redux/actions/institution_action";
+import { getGroup } from "../../core/redux/actions/group_action";
+import { getUserAccountOfficeGroup } from "../auth/redux/actions/user_account_office_group_action";
+import { user_account_office_groups } from "../auth/redux/selectors";
+import { getGeneralData } from "../../core/redux/actions/general_data_action";
+
+const Cases: React.FC<PropsFromRedux> = ({
+  id,
+  cases,
+  error,
+  message,
+
+  category_state,
+  tag_state,
+  target_state,
+  subject_state,
+  status_state,
+
+  income_state,
+  outcome_state,
+  case_state,
+  income_type_state,
+  outcome_type_state,
+
+  contact_state,
+  second_status_state,
+  institution_state,
+  group_state,
+  _user_account_office_groups,
+
+  getContact,
+  getSecondStatus,
+  getInstitution,
+  getGroup,
+
+  new_one,
+  getCase,
+  getCategory,
+  getTag,
+  getSubject,
+  getStatus,
+  getTarget,
+  putCase,
+  postCase,
+  getIncomeType,
+  getOutcomeType,
+  getUserAccountOfficeGroup,
+  getGeneralData
+}: PropsFromRedux) => {
+
+  const [loading, setLoading] = useState<boolean>(false)
+  const [contacts, setContacts] = useState<ContactRequest[]>()
+
+  const handleGetContacts = (data: ContactRequest) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/api/legal-surfer/get-contact`, data)
+    .then(response => {
+      setContacts(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  const handleFormSubmit = (data:CaseState) => {
+    console.log('create contact response: ', data)
+    // setData((prevState) => ({
+    //   ...prevState,
+    //   cases: [data.new_one!, ...prevState.cases],
+    // }));
+  }
+
+  useEffect(() => {
+    const onInit = async () => {
+      try { 
+        // await getCase({ id: 0, new_one: null });
+        // await getTag({ id: 0, name: "" });
+        // await getCategory({ id: 0, name: "" });
+        // await getTarget({ id: 0, name: "" });
+        // await getSubject({ id: 0, name: "" });
+        // await getStatus({ id: 0, name: "" });
+        // await getIncomeType({ id: 0, name: "", search: "income_type" });
+        // await getOutcomeType({ id: 0, name: "", search: "outcome_type" });
+        // await getContact({ id: 0, first_name: '', contacts: [] });
+        // await getSecondStatus({ id: 0, name: '', second_status_list: [], data: [], second_status: []});
+        // await getInstitution({id: 0, name: '', institutions: [], data: []});
+        // await getUserAccountOfficeGroup({id: 0, name: ''});
+        await getGeneralData({id: 0, name: ''});
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    onInit();
+  }, []);
+
+
+
+  return (
+    <FullWidthLayout>
+      <div className='p-3'>
+        <NewCaseModal 
+          tags={tag_state?.tags ? tag_state.tags : []}
+          categories={category_state?.categories ? category_state.categories : []}
+          targets={target_state?.targets ? target_state.targets : []}
+          subjects={subject_state?.subjects ? subject_state.subjects : []}
+          status={status_state?.status ? status_state.status : []}
+          second_status={second_status_state?.second_status ? second_status_state.second_status : []}
+          institutions={institution_state?.institutions ? institution_state.institutions : []}
+          contacts={contact_state?.contacts ? contact_state.contacts : []}
+          user_account_office_groups={_user_account_office_groups || []}
+          handleFormSubmit={handleFormSubmit}
+          colors={[]}
+          icon={<HiPlusCircle />}
+          label={"Nuevo caso"}
+          postCase={postCase} folders={[]}        />
+      </div>
+      <div>
+        {!loading && 
+          (
+            <CaseDataTable 
+            tags={tag_state?.tags ? tag_state?.tags : []}
+            categories={category_state?.categories ? category_state?.categories : []}
+            targets={target_state?.targets ? target_state?.targets : []}
+            subjects={subject_state?.subjects ? subject_state?.subjects : []}
+            status={status_state?.status ? status_state?.status : []}
+            user_account_office_groups={_user_account_office_groups || []}
+            putCase={putCase}
+            selectedRow={0}
+            data={cases ? cases : []}
+            new_one={null}
+            income_types={income_type_state?.income_types ? income_type_state.income_types : []}
+            outcome_types={outcome_type_state?.outcome_types ? outcome_type_state.outcome_types : []} 
+            second_status={second_status_state?.second_status ? second_status_state.second_status : []} 
+            institutions={institution_state?.institutions ? institution_state.institutions : []} 
+            contacts={contact_state?.contacts ? contact_state.contacts : []}            
+            />
+          )
+        }
+      </div>
+    </FullWidthLayout>
+  )
+}
+
+const mapStateToProps = (state: RootState) => ({
+  id: state.case_state?.id,
+  name: state.case_state?.name,
+  cases: state.case_state?.cases,
+  error: state.case_state?.error,
+  message: state.case_state?.message,
+  _user_account_office_groups: user_account_office_groups(state),
+  category_state: state.category_state,
+  tag_state: state.tag_state,
+  target_state: state.target_state,
+  subject_state: state.subject_state,
+  status_state: state.status_state,
+  contact_state: state.contact_state,
+
+  income_state: state.income_state,
+  outcome_state: state.outcome_state,
+  case_state: state.case_state,
+  income_type_state: state.income_type_state,
+  outcome_type_state: state.outcome_type_state,
+  
+  new_one: state.case_state?.new_one,
+  second_status_state : state.second_status_state,
+  institution_state : state.institution_state,
+  group_state : state.group_state,
+  // Map your state to props if needed
+});
+
+const mapDispatchToProps = {
+  getCategory,
+  getTag,
+  getSubject,
+  getStatus,
+  getTarget,
+  putCase,
+  postCase,
+  getCase,
+  getIncomeType,
+  getOutcomeType,
+  
+  getContact,
+  getSecondStatus,
+  getInstitution,
+  getGroup,
+  getUserAccountOfficeGroup,
+  getGeneralData
+  // Other actions...
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Cases);

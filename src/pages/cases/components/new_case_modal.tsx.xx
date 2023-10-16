@@ -1,0 +1,414 @@
+import React, { useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { HiCheck, HiPlusCircle } from 'react-icons/hi';
+import Select from "react-select";
+import { InputLabel, TextField, Select as SelectMui, SelectChangeEvent, OutlinedInput, MenuItem, Checkbox, ListItemText, FormControl } from '@mui/material';
+import { CustomButton } from '../../../core/components/buttons/custom_button';
+import { CategoryRequest } from '../../../core/redux/types/category_types';
+import { TargetRequest } from '../../../core/redux/types/target_types';
+import { SubjectRequest } from '../../../core/redux/types/subject_types';
+import { StatusRequest } from '../../../core/redux/types/status_types';
+import { TagRequest } from '../../../core/redux/types/tag_types';
+import { CaseRequest, CaseState } from '../redux/types/case_types';
+import { GroupRequest } from '../../../core/redux/types/group_types';
+import { SecondStatusRequest } from '../../../core/redux/types/second_status_types';
+import { InstitutionRequest } from '../../../core/redux/types/institution_types';
+import { ContactRequest } from '../../directory/redux/types/contact_types';
+import { FolderRequest } from '../../documents/redux/types/folder_types';
+import axios from 'axios'
+import { UserAccountOfficeGroupRequest } from '../../auth/redux/types/user_account_office_group_types';
+axios.defaults.withCredentials = true;
+
+type Props = {
+  tags: TagRequest[],
+  categories: CategoryRequest[],
+  targets: TargetRequest[],
+  subjects: SubjectRequest[],
+  status: StatusRequest[],
+  second_status: SecondStatusRequest[],
+  institutions: InstitutionRequest[],
+  colors: string[],
+  icon: React.ReactElement,
+  label: string,
+  folders: FolderRequest[],
+  contacts: ContactRequest[],
+  user_account_office_groups: UserAccountOfficeGroupRequest[],
+  handleFormSubmit: (data:any) => void,
+  postCase: (data: CaseRequest) => void,
+}
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+export default function NewCaseModal(props:Props) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const initialRequestData: CaseRequest = {
+    id: 0,
+    code: '',
+    name: '',
+    description: '',
+    created_by: {
+      id: 1,
+      name: ''
+    },
+    created_at: '',
+    updated_at: '',
+    contacts: [],
+    tags: [],
+    categories: [],
+    status: null,
+    subject: null,
+    target: null,
+    new_one: null,
+
+    second_status: null,
+    folders: [],
+    user_account_office_groups: [],
+  }
+
+  const [formData, setFormData] = useState<CaseRequest>(initialRequestData);
+  
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (fieldName: keyof CaseRequest) => (selectedOptions: any) => {
+    setFormData({
+      ...formData,
+      [fieldName]: selectedOptions,
+    });
+  };
+
+  // const handleChange = <T extends keyof CaseRequestData>(fieldName: T, data: any) => (event: SelectChangeEvent<typeof formData[T]>) => {
+  //   const {
+  //     target: { value }
+  //   } = event;
+  //   console.log(value)
+  //   setFormData(prevState => ({
+  //     ...prevState
+  //   }));
+  // };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    try {
+      event.preventDefault();
+      // props.handleFormSubmit(case_state.data);
+      props.postCase(formData);
+    } catch (error) {
+      console.log('Error new case modal : ', error);
+    }
+  };
+
+  const getOptionValue = (option:any) => option.id;
+  const getOptionLabel = (option:any) => option.name;
+
+  return (
+    <>
+      <CustomButton 
+      id='new-case-button'
+      colors={props.colors} icon={props.icon} label={props.label} onClick={openModal}/>
+
+      <Transition onClose={closeModal} appear show={isOpen} as={Dialog}>
+        <Dialog
+          onClose={closeModal}
+          className="fixed inset-0 z-50 overflow-y-auto"
+          aria-labelledby="modal-title"
+          open={isOpen}
+        >
+          <div className="flex items-center justify-center min-h-screen">
+            <Transition.Child
+              as={Dialog.Overlay}
+              className="fixed inset-0 bg-black opacity-30"
+            />
+            <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-1/2 mx-auto z-10">
+              <Dialog.Title
+                id="modal-title"
+                className="text-lg md:text-xl p-1 font-medium leading-6 text-gray-900"
+              >
+                <strong>Nuevo expediente</strong>
+              </Dialog.Title>
+            
+              
+              <form onSubmit={handleSubmit} className="flex flex-wrap items-left">
+                <div className='p-1 w-1/2'>
+                  <TextField 
+                    type="text"
+                    name="code"
+                    id="code"
+                    label="Codigo" 
+                    variant="outlined"
+                    onChange={handleInputChange} 
+                    value={formData.code} 
+                    className="w-full" 
+                  />
+                </div>
+                
+                <div className='p-1 w-1/2'>
+                  <TextField 
+                    type="text"
+                    name="name"
+                    id="name"
+                    label="Nombre" 
+                    variant="outlined"
+                    onChange={handleInputChange} 
+                    value={formData.name} 
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-full'>
+                  <TextField 
+                    type="text"
+                    name="description"
+                    id="description"
+                    label="Descripción" 
+                    variant="outlined"
+                    onChange={handleInputChange} 
+                    value={formData.description} 
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Categorias</label>
+                  <Select 
+                    id='categories'
+                    placeholder="Categorias"
+                    key={props.categories.length}
+                    options={props.categories} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("categories")} 
+                    value={formData.categories} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    isMulti
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Estado Principal</label>
+                  <Select 
+                    id='status'
+                    placeholder="Status"
+                    key={props.tags?.length}
+                    options={props.status} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("status")} 
+                    value={formData.status} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Estado Secundario</label>
+                  <Select 
+                    id='second_status'
+                    placeholder="Segundo Status"
+                    key={props.second_status?.length}
+                    options={props.second_status} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("second_status")} 
+                    value={formData.second_status} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Estado Terciario</label>
+                  <Select 
+                    id='subjects'
+                    placeholder="Subjects"
+                    key={props.subjects.length}
+                    options={props.subjects} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("subject")} 
+                    value={formData.subject} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Institucion activa</label>
+                  <Select 
+                    id='institutions'
+                    placeholder="Instituciones"
+                    key={props.institutions.length}
+                    options={props.institutions} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("institution")} 
+                    value={formData.institution} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Parte</label>
+                  <Select 
+                    id='target'
+                    placeholder="Parte"
+                    name='target'
+                    key={props.targets.length}
+                    options={props.targets} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("target")} 
+                    value={formData.target} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Tags</label>
+                  <Select 
+                    id='tags'
+                    placeholder="Tags"
+                    key={props.tags.length}
+                    options={props.tags} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("tags")} 
+                    value={formData.tags} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    isMulti
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Grupos</label>
+                  <Select 
+                    id='user_account_office_groups'
+                    placeholder="Grupos"
+                    key={props.user_account_office_groups.length}
+                    options={props.user_account_office_groups} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("user_account_office_groups")} 
+                    value={formData.user_account_office_groups} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    isMulti
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Folders</label>
+                  <Select 
+                    id='folders'
+                    placeholder="Folders"
+                    key={props.folders.length}
+                    options={props.folders} 
+                    formatOptionLabel={(data)=>{return data.name}} 
+                    onChange={handleSelectChange("folders")} 
+                    value={formData.folders} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    isMulti
+                    className="w-full" 
+                  />
+                </div>
+
+                <div className='p-1 w-1/2'>
+                  <label>Contacts</label>
+                  <Select 
+                    id='contacts'
+                    placeholder="Contacts"
+                    key={props.contacts.length}
+                    options={props.contacts} 
+                    formatOptionLabel={(data)=>{return data.phone + ' ' + data.first_name + ' ' + data.last_name}} 
+                    onChange={handleSelectChange("contacts")} 
+                    value={formData.contacts} 
+                    getOptionValue={getOptionValue}
+                    getOptionLabel={getOptionLabel}
+                    isMulti
+                    className="w-full" 
+                  />
+                </div>
+
+                {/* <div className='p-1 w-1/2'>
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+                  <SelectMui
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
+                    multiple
+                    value={formData.categories}
+                    onChange={handleChange('categories', props.categories)}
+                    input={<OutlinedInput label="Tag" />}
+                    renderValue={(selected) => selected.map(x => x.name).join(', ')}
+                    MenuProps={MenuProps}
+                  >
+                    {props.categories.map((category) => (
+                      <MenuItem key={category.id} value={category}>
+                        <Checkbox checked={formData.categories.indexOf(category) > -1} />
+                        <ListItemText primary={category.name} />
+                      </MenuItem>
+                    ))}
+                  </SelectMui>
+                </FormControl>
+                </div> */}
+
+                <div className='w-full pt-2'>
+                  <p className="text-sm text-gray-500 text-right">
+                    Todo listo para enviar?
+                  </p>
+                </div>
+                
+                <div className="w-full pt-2 flex justify-end space-x-2">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-200 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={closeModal}
+                    data-anchor="cancel-modal"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    data-anchor="confirm-modal"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  > 
+                    Si
+                    <HiCheck className="ml-2 -mr- h-5 w-5" aria-hidden="true" />
+                  </button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
+  );
+}

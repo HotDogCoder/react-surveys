@@ -1,0 +1,85 @@
+
+import cases from '../..';
+import { CaseActionTypes, CaseState } from '../types/case_types';
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+
+const initialState: CaseState = {
+    id: 0,
+    name: '',
+    cases: [],
+    error: null,
+    message: '',
+    new_one: null
+};
+
+const CaseReducer = (state = initialState, action: CaseActionTypes) => {
+    switch (action.type) {
+        
+        case 'POST_CASE':
+            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // console.log(response)
+            return {...state, new_one: null};
+        case 'POST_SUCCESS_CASE':
+            return {...state, cases: [...state.cases, action.payload.new_one!], error: null, message: action.payload.message};
+        case 'POST_FAIL_CASE':
+            return {...state, error: action.payload.error, message: action.payload.message};
+        
+        case 'PUT_CASE':
+            const data_with_case_updated = [...state.cases.map((case_) => {
+                if (case_.id === action.payload.new_one?.id) {
+                    return {...case_, ...action.payload.new_one};
+                }
+                return case_;
+            })];
+            return {...state, new_one: action.payload.new_one, cases: data_with_case_updated};
+        case 'PUT_SUCCESS_CASE':
+            return {...state, error: null, message: action.payload.message};
+        case 'PUT_FAIL_CASE':
+            return {...state, error: action.payload.error, message: action.payload.message};
+        
+        case 'UPDATE_CASE':
+            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // console.log(response)
+            return {...state, data: []};
+        case 'UPDATE_SUCCESS_CASE':
+            return {...state, error: null, message: action.payload.message};
+        case 'UPDATE_FAIL_CASE':
+            return {...state, error: action.payload.error, message: action.payload.message};
+            
+        case 'DELETE_CASE':
+            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // console.log(response)
+            return {...state, data: []};
+        case 'DELETE_SUCCESS_CASE':
+            return {...state, error: null, message: action.payload.message};
+        case 'DELETE_FAIL_CASE':
+            return {...state, error: action.payload.error, message: action.payload.message};
+        
+        case 'GET_CASE':
+            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            console.log('REDUCER : ', action.payload.cases)
+            return {...state, cases : action.payload.cases};
+        case 'GET_SUCCESS_CASE':
+            return {...state, error: null, message: action.payload.message};
+        case 'GET_FAIL_CASE':
+            return {...state, error: action.payload.error, message: action.payload.message};
+
+        case 'SELECT_CASE':
+            return {...state, data: []};
+        case 'SELECT_SUCCESS_CASE':
+            return {...state, data: []};
+        case 'SELECT_FAIL_CASE':
+            return {...state, error: action.payload.error, data: []};
+// [ANCHOR_1]
+        case 'START_LOADING':
+            return {...state, loading: true};
+        case 'END_LOADING':
+            return {...state, loading: false};
+        default:
+            return state;
+    }
+};
+
+export default CaseReducer;
+    

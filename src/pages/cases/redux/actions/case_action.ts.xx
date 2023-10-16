@@ -1,0 +1,112 @@
+
+import { Dispatch } from 'redux';
+import { CaseActionTypes, CaseRequest, CaseState } from '../types/case_types';
+import axios from 'axios'
+import { UserAccountActionTypes } from '../../../auth/redux/types/user_account_types';
+import { refreshUserAccount } from '../../../auth/redux/actions/user_account_action';
+import { ThunkAction } from 'redux-thunk';
+axios.defaults.withCredentials = true;
+
+// export const postCase = (data: CaseRequest) => async (dispatch: Dispatch<CaseActionTypes | UserAccountActionTypes>) => {
+export const postCase = (data: CaseRequest): ThunkAction<void, CaseState, null, CaseActionTypes> => async (dispatch) => {
+
+    try {
+        dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
+        
+        dispatch({ type: 'POST_CASE', payload: {...data, error: null, message:'POST_CASE'} });
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/legal-surfer/add-case`, data);
+        
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'POST_SUCCESS_CASE', payload: {...response.data, error: null, message: "POST_SUCCESS"} });
+    } catch (error) {
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'POST_FAIL_CASE', payload: {...data, error: error, message: "POST_FAIL"} });
+        dispatch(refreshUserAccount())
+    }
+};
+
+export const putCase = (data: CaseRequest) => async (dispatch: Dispatch<CaseActionTypes>) => {{
+    try {
+        dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
+
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/add-case`, data);
+        dispatch({ type: 'PUT_CASE', payload: response.data });
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'PUT_SUCCESS_CASE', payload: {...response.data, error: null, message: "PUT_SUCCESS"} });
+    } catch (error) {
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'PUT_FAIL_CASE', payload: {
+            error: error, message: "PUT_FAIL",
+            id: 0,
+            cases: [],
+            new_one: null
+        } });
+    }
+}};
+
+export const updateCase = (data: CaseState) => (dispatch: Dispatch<CaseActionTypes>) => {{
+    try {
+        dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
+
+        dispatch({ type: 'UPDATE_CASE', payload: data });
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'UPDATE_SUCCESS_CASE', payload: {...data, error: null, message: "UPDATE_SUCCESS"} });
+
+    } catch (error) {
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+
+        dispatch({ type: 'UPDATE_FAIL_CASE', payload: {...data, error: error, message: "UPDATE_FAIL"} });
+    }
+}};
+
+export const deleteCase = (data: CaseState) => (dispatch: Dispatch<CaseActionTypes>) => {{
+    try {
+        dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
+
+        dispatch({ type: 'DELETE_CASE', payload: data });
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'DELETE_SUCCESS_CASE', payload: {...data, error: null, message: "DELETE_SUCCESS"} });
+
+    } catch (error) {
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+
+        dispatch({ type: 'DELETE_FAIL_CASE', payload: {...data, error: error, message: "DELETE_FAIL"} });
+    }
+}};
+
+export const getCase = (data: CaseRequest) => async (dispatch: Dispatch<CaseActionTypes>) => {{
+    try {
+        dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
+
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/legal-surfer/get-case`, data)
+        dispatch({ type: 'GET_CASE', payload: response.data });
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'GET_SUCCESS_CASE', payload: {...response.data, error: null, message: "POST_SUCCESS"} });
+    } catch (error) {
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+
+        dispatch({ type: 'GET_FAIL_CASE', payload: {
+            error: error, message: "GET_FAIL_CASE",
+            cases: [],
+            id: 0,
+            new_one: null
+        } });
+    }
+}};
+
+export const selectCase = (data: CaseState) => (dispatch: Dispatch<CaseActionTypes>) => {{
+    try {
+        dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
+
+        dispatch({ type: 'SELECT_CASE', payload: data });
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+        dispatch({ type: 'SELECT_SUCCESS_CASE', payload: {...data, error: null, message: "SELECT_SUCCESS"} });
+    } catch (error) {
+        dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
+
+        dispatch({ type: 'SELECT_FAIL_CASE', payload: {...data, error: error, message: "SELECT_FAIL"} });
+    }
+}};
+// [ANCHOR_1]
+        
+    

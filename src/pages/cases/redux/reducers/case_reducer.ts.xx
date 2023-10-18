@@ -17,7 +17,7 @@ const CaseReducer = (state = initialState, action: CaseActionTypes) => {
     switch (action.type) {
         
         case 'POST_CASE':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return {...state, new_one: null};
         case 'POST_SUCCESS_CASE':
@@ -39,7 +39,7 @@ const CaseReducer = (state = initialState, action: CaseActionTypes) => {
             return {...state, error: action.payload.error, message: action.payload.message};
         
         case 'UPDATE_CASE':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return {...state, data: []};
         case 'UPDATE_SUCCESS_CASE':
@@ -48,7 +48,7 @@ const CaseReducer = (state = initialState, action: CaseActionTypes) => {
             return {...state, error: action.payload.error, message: action.payload.message};
             
         case 'DELETE_CASE':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return {...state, data: []};
         case 'DELETE_SUCCESS_CASE':
@@ -57,7 +57,7 @@ const CaseReducer = (state = initialState, action: CaseActionTypes) => {
             return {...state, error: action.payload.error, message: action.payload.message};
         
         case 'GET_CASE':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             console.log('REDUCER : ', action.payload.cases)
             return {...state, cases : action.payload.cases};
         case 'GET_SUCCESS_CASE':

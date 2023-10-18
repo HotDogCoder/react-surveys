@@ -64,7 +64,7 @@ function Footer() {
             setLoading(true);
             axios
                 .post(
-                    `${process.env.REACT_APP_API_URL}/api/contacts/newsletter`,
+                    `${process.env.REACT_APP_NETCORE_API_URL}/api/contacts/newsletter`,
                     formData,
                     config
                 )

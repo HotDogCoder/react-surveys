@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 export const postUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) => async (dispatch: Dispatch<UserAccountOfficeGroupActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/user/user-account-office-group`, data);
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/user/user-account-office-group`, data);
         dispatch({ type: 'POST_USER_ACCOUNT_OFFICE_GROUP', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'POST_SUCCESS_USER_ACCOUNT_OFFICE_GROUP', payload: {...response.data, error: null, message: "POST_USER_ACCOUNT_OFFICE_GROUP_SUCCESS"} });
@@ -20,7 +20,7 @@ export const postUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) 
 export const putUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) => async (dispatch: Dispatch<UserAccountOfficeGroupActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'PUT_USER_ACCOUNT_OFFICE_GROUP', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'PUT_SUCCESS_USER_ACCOUNT_OFFICE_GROUP', payload: {...response.data, error: null, message: "PUT_USER_ACCOUNT_OFFICE_GROUP_SUCCESS"} });
@@ -33,7 +33,7 @@ export const putUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) =
 export const updateUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) => async (dispatch: Dispatch<UserAccountOfficeGroupActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'UPDATE_USER_ACCOUNT_OFFICE_GROUP', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'UPDATE_SUCCESS_USER_ACCOUNT_OFFICE_GROUP', payload: {...response.data, error: null, message: "UPDATE_USER_ACCOUNT_OFFICE_GROUP_SUCCESS"} });
@@ -46,7 +46,7 @@ export const updateUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest
 export const deleteUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) => async (dispatch: Dispatch<UserAccountOfficeGroupActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
+        const response = await axios.delete(`${process.env.REACT_APP_NETCORE_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'DELETE_USER_ACCOUNT_OFFICE_GROUP', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'DELETE_SUCCESS_USER_ACCOUNT_OFFICE_GROUP', payload: {...response.data, error: null, message: "DELETE_USER_ACCOUNT_OFFICE_GROUP_SUCCESS"} });
@@ -59,7 +59,7 @@ export const deleteUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest
 export const getUserAccountOfficeGroup = (data: UserAccountOfficeGroupRequest) => async (dispatch: Dispatch<UserAccountOfficeGroupActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
+        const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/user/user-account-office-group?id=${data.id}&name=${data.name}`);
         
         dispatch({ type: 'GET_USER_ACCOUNT_OFFICE_GROUP', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });

@@ -14,7 +14,7 @@ export const postCase = (data: CaseRequest): ThunkAction<void, CaseState, null, 
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         
         dispatch({ type: 'POST_CASE', payload: {...data, error: null, message:'POST_CASE'} });
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/legal-surfer/add-case`, data);
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/add-case`, data);
         
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'POST_SUCCESS_CASE', payload: {...response.data, error: null, message: "POST_SUCCESS"} });
@@ -29,7 +29,7 @@ export const putCase = (data: CaseRequest) => async (dispatch: Dispatch<CaseActi
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
 
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/add-case`, data);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/add-case`, data);
         dispatch({ type: 'PUT_CASE', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'PUT_SUCCESS_CASE', payload: {...response.data, error: null, message: "PUT_SUCCESS"} });
@@ -78,7 +78,7 @@ export const getCase = (data: CaseRequest) => async (dispatch: Dispatch<CaseActi
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
 
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/legal-surfer/get-case`, data)
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/get-case`, data)
         dispatch({ type: 'GET_CASE', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'GET_SUCCESS_CASE', payload: {...response.data, error: null, message: "POST_SUCCESS"} });

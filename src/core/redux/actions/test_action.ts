@@ -25,7 +25,7 @@ export const postTest = (data: TestRequest) => async (dispatch: Dispatch<TestAct
 export const putTest = (data: TestRequest) => async (dispatch: Dispatch<TestActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/test?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/test?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'PUT_TEST', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'PUT_SUCCESS_TEST', payload: {...response.data, error: null, message: "PUT_TEST_SUCCESS"} });
@@ -38,7 +38,7 @@ export const putTest = (data: TestRequest) => async (dispatch: Dispatch<TestActi
 export const updateTest = (data: TestRequest) => async (dispatch: Dispatch<TestActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/test?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/test?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'UPDATE_TEST', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'UPDATE_SUCCESS_TEST', payload: {...response.data, error: null, message: "UPDATE_TEST_SUCCESS"} });
@@ -51,7 +51,7 @@ export const updateTest = (data: TestRequest) => async (dispatch: Dispatch<TestA
 export const deleteTest = (data: TestRequest) => async (dispatch: Dispatch<TestActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/legal-surfer/test?id=${data.id}&name=${data.name}`);
+        const response = await axios.delete(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/test?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'DELETE_TEST', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'DELETE_SUCCESS_TEST', payload: {...response.data, error: null, message: "DELETE_TEST_SUCCESS"} });

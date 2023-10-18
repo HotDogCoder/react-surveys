@@ -14,7 +14,7 @@ export const postUserAccount = (data: UserAccount) => async (dispatch: Dispatch<
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         dispatch({ type: 'POST_USER_ACCOUNT', payload: {...data, id: 0} });
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, data, config);
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/auth/login`, data, config);
 
         dispatch({ type: 'POST_SUCCESS_USER_ACCOUNT', payload: { ...response.data, isAuthenticated: true,error: null, message: "POST_SUCCESS" } });
         dispatch({ type: 'END_LOADING', payload: { id: 0, name: '', error: null, message: "END_LOADING"} });
@@ -105,7 +105,7 @@ export const verifyUserAccount = (): ThunkAction<void, UserAccountState, null, U
         try {
             const body = JSON.stringify({ "token": localStorage.getItem('access_token') });
             const token = localStorage.getItem('access_token')
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/verify?token=${token}`, config)
+            const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/auth/verify?token=${token}`, config)
         
             dispatch ({
                 type: 'VERIFY_SUCCESS_USER_ACCOUNT',
@@ -147,7 +147,7 @@ export const refreshUserAccount = (): ThunkAction<void, any, null, any> => async
         };
         try {
             const body = JSON.stringify({ "RefreshToken": localStorage.getItem('access_token') });
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/refresh`, body, config);
+            const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/auth/refresh`, body, config);
             dispatch ({
                 type: 'REFRESH_USER_ACCOUNT',
                 payload: response.data
@@ -191,7 +191,7 @@ export const logoutUserAccount = () => async (dispatch: Dispatch<UserAccountActi
         }
     };
     try {
-        //const response = await axios.post(`${process.env.REACT_APP_API_URL}/dj-rest-auth/logout/`, {},config);
+        //const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/dj-rest-auth/logout/`, {},config);
         dispatch({ type: 'LOGOUT_USER_ACCOUNT', payload: {
             id: 0,
             name: '',

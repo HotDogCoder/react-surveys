@@ -8,7 +8,7 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 export const postSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/Survey`, data);
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/Survey`, data);
         dispatch({ type: 'POST_SURVEY', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'POST_SUCCESS_SURVEY', payload: {...response.data, error: null, message: "POST_SURVEY_SUCCESS"} });
@@ -21,7 +21,7 @@ export const postSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<Sur
 export const putSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/Survey/${data.id}`, data);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/Survey/${data.id}`, data);
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'PUT_SURVEY', payload: response.data });
         
@@ -35,7 +35,7 @@ export const putSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<Surv
 export const updateSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/survey?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/survey?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'UPDATE_SURVEY', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'UPDATE_SUCCESS_SURVEY', payload: {...response.data, error: null, message: "UPDATE_SURVEY_SUCCESS"} });
@@ -48,7 +48,7 @@ export const updateSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<S
 export const deleteSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/legal-surfer/survey?id=${data.id}&name=${data.name}`);
+        const response = await axios.delete(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/survey?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'DELETE_SURVEY', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'DELETE_SUCCESS_SURVEY', payload: {...response.data, error: null, message: "DELETE_SURVEY_SUCCESS"} });
@@ -61,7 +61,7 @@ export const deleteSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<S
 export const getSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Survey`);
+        const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/Survey`);
         
         dispatch({ type: 'GET_SURVEY', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
@@ -131,7 +131,7 @@ export const addUserResponseSurvey = (data: SurveyState) => (dispatch: Dispatch<
 export const getRankingSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
         dispatch({ type: 'GET_RANKING_SURVEY', payload: data });
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Ranking`);
+        const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/Ranking`);
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'GET_RANKING_SUCCESS_SURVEY', payload: response.data });
     } catch (error) {

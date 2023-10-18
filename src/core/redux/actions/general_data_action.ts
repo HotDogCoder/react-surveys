@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 export const postGeneralData = (data: GeneralDataRequest) => async (dispatch: Dispatch<GeneralDataActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/legal-surfer/general-data`, data);
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/general-data`, data);
         dispatch({ type: 'POST_GENERAL_DATA', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'POST_SUCCESS_GENERAL_DATA', payload: {...response.data, error: null, message: "POST_GENERAL_DATA_SUCCESS"} });
@@ -20,7 +20,7 @@ export const postGeneralData = (data: GeneralDataRequest) => async (dispatch: Di
 export const putGeneralData = (data: GeneralDataRequest) => async (dispatch: Dispatch<GeneralDataActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'PUT_GENERAL_DATA', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'PUT_SUCCESS_GENERAL_DATA', payload: {...response.data, error: null, message: "PUT_GENERAL_DATA_SUCCESS"} });
@@ -33,7 +33,7 @@ export const putGeneralData = (data: GeneralDataRequest) => async (dispatch: Dis
 export const updateGeneralData = (data: GeneralDataRequest) => async (dispatch: Dispatch<GeneralDataActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
+        const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'UPDATE_GENERAL_DATA', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'UPDATE_SUCCESS_GENERAL_DATA', payload: {...response.data, error: null, message: "UPDATE_GENERAL_DATA_SUCCESS"} });
@@ -46,7 +46,7 @@ export const updateGeneralData = (data: GeneralDataRequest) => async (dispatch: 
 export const deleteGeneralData = (data: GeneralDataRequest) => async (dispatch: Dispatch<GeneralDataActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
+        const response = await axios.delete(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'DELETE_GENERAL_DATA', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'DELETE_SUCCESS_GENERAL_DATA', payload: {...response.data, error: null, message: "DELETE_GENERAL_DATA_SUCCESS"} });
@@ -59,7 +59,7 @@ export const deleteGeneralData = (data: GeneralDataRequest) => async (dispatch: 
 export const getGeneralData = (data: GeneralDataRequest) => async (dispatch: Dispatch<GeneralDataActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
+        const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/general-data?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'GET_GENERAL_DATA', payload: response.data });
         
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });

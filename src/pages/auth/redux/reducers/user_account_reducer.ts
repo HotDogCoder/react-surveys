@@ -32,7 +32,7 @@ const UserAccountReducer = (state = initialState, action: UserAccountActionTypes
             return {...state, access: null, isAuthenticate: false, user: null, error: action.payload.error, message: action.payload.message, non_field_errors: action.payload.non_field_errors};
         
         case 'PUT_USER_ACCOUNT':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return {...state, data: []};
         case 'PUT_SUCCESS_USER_ACCOUNT':
@@ -41,7 +41,7 @@ const UserAccountReducer = (state = initialState, action: UserAccountActionTypes
             return {...state, error: action.payload.error!, message: action.payload.message!};
         
         case 'UPDATE_USER_ACCOUNT':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return {...state, data: []};
         case 'UPDATE_SUCCESS_USER_ACCOUNT':
@@ -50,7 +50,7 @@ const UserAccountReducer = (state = initialState, action: UserAccountActionTypes
             return {...state, error: action.payload.error!, message: action.payload.message};
             
         case 'DELETE_USER_ACCOUNT':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return {...state, data: []};
         case 'DELETE_SUCCESS_USER_ACCOUNT':
@@ -59,7 +59,7 @@ const UserAccountReducer = (state = initialState, action: UserAccountActionTypes
             return {...state, error: action.payload.error!, message: action.payload.message};
         
         case 'GET_USER_ACCOUNT':
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/`, {});
+            // const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/`, {});
             // console.log(response)
             return state;
         case 'GET_SUCCESS_USER_ACCOUNT':

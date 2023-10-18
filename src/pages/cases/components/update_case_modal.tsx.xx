@@ -91,7 +91,7 @@ export default function UpdateCaseModal(props:Props) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios.put(`${process.env.REACT_APP_API_URL}/api/legal-surfer/add-case`, formData)
+    axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/add-case`, formData)
     .then(response => {
       // console.log(response.data);
       props.handleFormSubmit(response.data);

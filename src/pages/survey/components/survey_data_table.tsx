@@ -76,7 +76,7 @@ export const SurveyDataTable = (props: Props) => {
 
         </div>
       ) : (
-        <p>No tienes caseos aun</p>
+        <p>No tienes encuestas aun</p>
       )}
     </>
   )

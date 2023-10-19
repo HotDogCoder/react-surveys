@@ -2,11 +2,11 @@
 import { Dispatch } from 'redux';
 import { SurveyActionTypes, SurveyRequest, SurveyState } from '../types/survey_types';
 import axios from 'axios';
-const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 export const postSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/Survey`, data);
         dispatch({ type: 'POST_SURVEY', payload: response.data });
@@ -20,6 +20,8 @@ export const postSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<Sur
 
 export const putSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/Survey/${data.id}`, data);
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
@@ -34,6 +36,8 @@ export const putSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<Surv
 
 export const updateSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         const response = await axios.put(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/survey?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'UPDATE_SURVEY', payload: response.data });
@@ -47,6 +51,8 @@ export const updateSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<S
 
 export const deleteSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         const response = await axios.delete(`${process.env.REACT_APP_NETCORE_API_URL}/api/legal-surfer/survey?id=${data.id}&name=${data.name}`);
         dispatch({ type: 'DELETE_SURVEY', payload: response.data });
@@ -60,6 +66,8 @@ export const deleteSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<S
 
 export const getSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
         const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/Survey`);
         
@@ -75,6 +83,8 @@ export const getSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<Surv
 
 export const addQuestionSurvey = (data: SurveyState) => (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'ADD_QUESTION_SURVEY', payload: data });
         
         dispatch({ type: 'ADD_QUESTION_SUCCESS_SURVEY', payload: {...data, error: null, message: "ADD_QUESTION_SUCCESS"} });
@@ -86,6 +96,8 @@ export const addQuestionSurvey = (data: SurveyState) => (dispatch: Dispatch<Surv
 
 export const addOptionSurvey = (data: SurveyState) => (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'ADD_OPTION_SURVEY', payload: data });
         
         dispatch({ type: 'ADD_OPTION_SUCCESS_SURVEY', payload: {...data, error: null, message: "ADD_OPTION_SUCCESS"} });
@@ -97,6 +109,8 @@ export const addOptionSurvey = (data: SurveyState) => (dispatch: Dispatch<Survey
 
 export const getQuestionSurvey = (data: SurveyState) => (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'GET_QUESTION_SURVEY', payload: data });
         
         dispatch({ type: 'GET_QUESTION_SUCCESS_SURVEY', payload: {...data, error: null, message: "GET_QUESTION_SUCCESS"} });
@@ -108,6 +122,8 @@ export const getQuestionSurvey = (data: SurveyState) => (dispatch: Dispatch<Surv
 
 export const getOptionSurvey = (data: SurveyState) => (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'GET_OPTION_SURVEY', payload: data });
         
         dispatch({ type: 'GET_OPTION_SUCCESS_SURVEY', payload: {...data, error: null, message: "GET_OPTION_SUCCESS"} });
@@ -119,6 +135,8 @@ export const getOptionSurvey = (data: SurveyState) => (dispatch: Dispatch<Survey
 
 export const addUserResponseSurvey = (data: SurveyState) => (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'ADD_USER_RESPONSE_SURVEY', payload: data });
         
         dispatch({ type: 'ADD_USER_RESPONSE_SUCCESS_SURVEY', payload: {...data, error: null, message: "ADD_USER_RESPONSE_SUCCESS"} });
@@ -130,6 +148,8 @@ export const addUserResponseSurvey = (data: SurveyState) => (dispatch: Dispatch<
 
 export const getRankingSurvey = (data: SurveyRequest) => async (dispatch: Dispatch<SurveyActionTypes>) => {{
     try {
+        const token = localStorage.getItem('access_token'); // Assuming you store your JWT in localStorage
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch({ type: 'GET_RANKING_SURVEY', payload: data });
         const response = await axios.get(`${process.env.REACT_APP_NETCORE_API_URL}/api/Ranking`);
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });

@@ -22,7 +22,7 @@ const SurveyReducer = (state = initialState, action: SurveyActionTypes) => {
     switch (action.type) {
         
         case 'POST_SURVEY':
-            return {...state, surveies: [...state.surveies || [], action.payload!], error: null, message: ''};
+            return {...state, surveies: [...state.surveies || [], action.payload!], selected: null, error: null, message: ''};
         case 'POST_SUCCESS_SURVEY':
             return {...state, error: null, message: ''};
         case 'POST_FAIL_SURVEY':
@@ -39,7 +39,7 @@ const SurveyReducer = (state = initialState, action: SurveyActionTypes) => {
                 old_data?.splice(index, 1, action.payload!);
             }
 
-            return {...state, error: null, message: '' , surveies: old_data};
+            return {...state, error: null, message: '' , surveies: old_data, selected: action.payload!};
         case 'PUT_FAIL_SURVEY':
             return {...state, error: '', message: ''};
         
@@ -51,7 +51,7 @@ const SurveyReducer = (state = initialState, action: SurveyActionTypes) => {
             return {...state, error: '', message: ''};
             
         case 'DELETE_SURVEY':
-            return {...state, surveies: action.payload.surveies?.filter((x:SurveyRequest) => x.id !== action.payload.deleted?.id), error: null, message: ''};
+            return {...state, selected: null, surveies: action.payload.surveies?.filter((x:SurveyRequest) => x.id !== action.payload.deleted?.id), error: null, message: ''};
         case 'DELETE_SUCCESS_SURVEY':
             return {...state, error: null, message: ''};
         case 'DELETE_FAIL_SURVEY':

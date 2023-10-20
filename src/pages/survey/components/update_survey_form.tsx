@@ -92,9 +92,9 @@ export default function UpdateSurveyForm(props:Props) {
             <div className="rounded-lg shadow-lg p-4 w-full md:w-1/2 mx-auto z-10 bg-stone-200 dark:bg-slate-400">
               <Dialog.Title
                 id="modal-title"
-                className="text-lg md:text-xl p-1 font-medium leading-6 text-slate-700 dark:text-stone-50"
+                className="w-full flex items-center justify-between text-lg md:text-xl p-1 font-medium leading-6 text-slate-700 dark:text-stone-50"
               >
-                <strong>Encuesta : {formData.title}</strong>
+                <strong>Encuesta : {formData.title}</strong>  <CustomButton icon={<HiX />} colors={[]} label={''} onClick={closeModal}/>
               </Dialog.Title>
               <form onSubmit={handleSubmit} className="flex flex-wrap items-left bg-stone-200 dark:bg-slate-400">
                 

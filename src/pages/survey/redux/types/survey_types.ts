@@ -1,3 +1,4 @@
+import { SurveyResponseRequest } from "./survey_response_types";
 
 export interface Survey {
     id: number;
@@ -14,6 +15,7 @@ export interface SurveyRequest {
     message?: string;
     questions?: QuestionRequest[];
     textanswer?: string;
+    limit?: number;
 }
 
 export interface SurveyResponse {
@@ -31,6 +33,7 @@ export interface SurveyResponse {
     surveies?: SurveyRequest[];
     questions?: QuestionRequest[];
     ranking?: RankingModel[];
+    responses?: SurveyResponseRequest[];
 }
 
 export interface Question {

@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 export const postUserSurveyResponse = (data: SurveyRequest) => async (dispatch: Dispatch<UserSurveyResponseActionTypes>) => {{
     try {
         dispatch({ type: 'START_LOADING', payload: {...data, error: null, message: "START_LOADING"} });
-        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/UserSurveyResponse`, data);
+        const response = await axios.post(`${process.env.REACT_APP_NETCORE_API_URL}/api/SurveyResponse`, data);
         dispatch({ type: 'POST_USER_SURVEY_RESPONSE', payload: response.data });
         dispatch({ type: 'END_LOADING', payload: {...data, error: null, message: "END_LOADING"} });
         dispatch({ type: 'POST_SUCCESS_USER_SURVEY_RESPONSE', payload: {...response.data, error: null, message: "POST_USER_SURVEY_RESPONSE_SUCCESS"} });

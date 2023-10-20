@@ -7,6 +7,7 @@ import { UserAccountOfficeGroupState } from "./pages/auth/redux/types/user_accou
 import { TestState } from "./core/redux/types/test_types";
 import { GeneralDataState } from "./core/redux/types/general_data_types";
 import { SurveyState } from "./pages/survey/redux/types/survey_types";
+import { SurveyResponseState } from "./pages/survey/redux/types/survey_response_types";
 
 export interface RootState {
     // [ANCHOR_1]
@@ -16,7 +17,7 @@ export interface RootState {
     user_account_office_group_state?: UserAccountOfficeGroupState;
     general_data_state?: GeneralDataState;
     survey_state?: SurveyState;
-
+    survey_response_state?: SurveyResponseState;
     test_state?: TestState;
 }
 

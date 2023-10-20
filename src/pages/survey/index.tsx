@@ -8,20 +8,23 @@ import { HiAnnotation, HiPlus } from "react-icons/hi";
 import NewSurveyModal from "./components/new_survey_form";
 import { SurveyDataTable } from "./components/survey_data_table";
 import { SurveyRequest, SurveyResponse } from "./redux/types/survey_types";
-import { get_ranking_survies, get_survies } from "./redux/selectors";
+import { get_ranking_survies, get_survey_responses, get_survies } from "./redux/selectors";
 import { getRankingSurvey, getSurvey, postSurvey, putSurvey } from "./redux/actions/survey_action";
 import { UserSurveyResponseRequest } from "./redux/types/user_survey_response_types";
 import { postUserSurveyResponse } from "./redux/actions/user_survey_response_action";
 import RankingComponent from "./components/ranking_component";
+import { getSurveyResponse } from "./redux/actions/survey_response_action";
 
 const Survey: React.FC<PropsFromRedux> = ({
   survies,
   ranking_survies,
+  survey_responses,
   getSurvey,
   postSurvey,
   putSurvey,
   postUserSurveyResponse,
-  getRankingSurvey
+  getRankingSurvey,
+  getSurveyResponse,
 }: PropsFromRedux) => {
 
   const [loading, setLoading] = useState<boolean>(false)
@@ -29,6 +32,9 @@ const Survey: React.FC<PropsFromRedux> = ({
   useEffect(() => {
     const onInit = async () => {
       try {
+        await getSurveyResponse({
+          id: 0
+        })
         await getSurvey({
           id: 0,
           name: ""
@@ -60,6 +66,9 @@ const Survey: React.FC<PropsFromRedux> = ({
     await getRankingSurvey({
       id: 0
     })
+    await getSurveyResponse({
+      id: 0
+    })
   }
 
   return (
@@ -75,7 +84,7 @@ const Survey: React.FC<PropsFromRedux> = ({
             } } postSurvey={postSurvey}/>
         </div>
         <div className="flex flex-row items-center justify-center w-full h-full">
-          <SurveyDataTable data={survies!} updateSurvey={handle_update} reponseSurvey={handle_response}/>
+          <SurveyDataTable results={survey_responses!} data={survies!} updateSurvey={handle_update} reponseSurvey={handle_response}/>
         </div>
       </div>
     </FullWidthLayout>
@@ -84,7 +93,8 @@ const Survey: React.FC<PropsFromRedux> = ({
 
 const mapStateToProps = (state: RootState) => ({
   survies: get_survies(state),
-  ranking_survies: get_ranking_survies(state)
+  ranking_survies: get_ranking_survies(state),
+  survey_responses: get_survey_responses(state)
 });
 
 const mapDispatchToProps = {
@@ -92,7 +102,8 @@ const mapDispatchToProps = {
   postSurvey,
   putSurvey,
   postUserSurveyResponse,
-  getRankingSurvey
+  getRankingSurvey,
+  getSurveyResponse
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

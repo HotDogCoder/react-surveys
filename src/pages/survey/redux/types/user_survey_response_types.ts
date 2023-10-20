@@ -1,4 +1,4 @@
-import { Question, QuestionRequest, SurveyRequest } from "./survey_types";
+import { OptionRequest, Question, QuestionRequest, SurveyRequest } from "./survey_types";
 
 export interface UserSurveyResponse {
     id: number;
@@ -12,7 +12,11 @@ export interface UserSurveyResponseRequest {
     message?: string;
     textanswer?: string;
     question: QuestionRequest;
-    selectedoptions?: number[];
+    option: OptionRequest;
+    selectedoptions?: OptionRequest[];
+    questions?: QuestionRequest[];
+    limit?: number;
+    questionId?: number;
 }
 
 export interface UserSurveyResponseResponse {

@@ -7,9 +7,12 @@ import NewSurveyModal from './new_survey_form';
 import { CustomButton } from '../../../core/components/buttons/custom_button';
 import { UserSurveyResponseRequest } from '../redux/types/user_survey_response_types';
 import NewUserSurveyResponseModal from './new_user_survey_response_form';
+import { SurveyResponseResponse } from '../redux/types/survey_response_types';
+import SurveyResponseComponent from './survey_response_component';
 
 type Props = {
   data: SurveyRequest[],
+  results: SurveyResponseResponse[],
   updateSurvey: (data: SurveyRequest) => void,
   reponseSurvey: (data: SurveyRequest) => void,
 }
@@ -29,9 +32,9 @@ export const SurveyDataTable = (props: Props) => {
   return (
     <>
       {props.data ? (
-        <div className='pt-5 w-full'>
+        <div className='flex flex-wrap pt-5 w-full'>
 
-          <div className="overflow-x-scroll">
+          <div className="w-full md:w-1/2 overflow-x-scroll">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -74,6 +77,9 @@ export const SurveyDataTable = (props: Props) => {
             </table>
           </div>
 
+          <div className='w-full md:w-1/2 p-2'>
+            <SurveyResponseComponent results={props.results}/>
+          </div>        
         </div>
       ) : (
         <p>No tienes encuestas aun</p>
